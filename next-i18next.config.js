@@ -3,7 +3,7 @@ module.exports = {
 	i18n: {
 		locales: ['ru'],
 		defaultLocale: 'ru',
-		localePath: path.resolve('./public/static/locales'),
+		localePath: path.resolve(__dirname, './public/locales'),
 		nsSeparator: false,
 		keySeparator: false,
 		localeDetection: false,
