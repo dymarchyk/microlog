@@ -1,21 +1,16 @@
-import nc           from 'next-connect'
-import {
-	all,
-	validation,
-	onlyOwner,
-	withProject
-}                   from '@/middleware'
-import Joi          from 'joi'
-import { defaults } from 'lodash'
-import dayjs        from 'dayjs'
-import { Log }      from '@/entities'
+import nc from 'next-connect'
+import {all, onlyOwner, validation, withProject} from '@/middleware'
+import Joi from 'joi'
+import {defaults} from 'lodash'
+import dayjs from 'dayjs'
+import {Log} from '@/entities'
 
 
 const logSchema = Joi.object({
-	message  : Joi.string()
+	message: Joi.string()
 		.required(),
 	namespace: Joi.string(),
-	level    : Joi.string()
+	level: Joi.string()
 		.default('info')
 })
 
@@ -91,10 +86,10 @@ async function create( req, res ) {
 		})
 		const log = new Log(data)
 		await log.save()
-		res.json({ message: 'saved', data: log })
+		res.status(200).json({message: 'saved', data: log}).end()
 	} catch ( e ) {
 		console.log('cannot save log', e)
-		res.json({ message: 'saved' })
+		res.status(200).json({message: 'saved'}).end()
 	}
 }
 
