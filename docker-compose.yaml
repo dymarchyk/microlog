@@ -1,0 +1,20 @@
+version: "3.3"
+
+services:
+  database:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - "./data:/data/db"
+  app:
+    image: node:slim
+    ports:
+     - "3030:3030"
+    volumes:
+      - .:/app
+    links:
+     - database
+    environment:
+     PORT: 3030
+     DB_URI: mongodb://database:27017/microlog
