@@ -1,33 +1,26 @@
-import React                      from 'react'
-import {
-	Button,
-	Col,
-	Form,
-	Input,
-	notification,
-	Row,
-	Space,
-	Typography
-}                                 from 'antd'
-import { useTranslation }         from 'next-i18next'
-import Link                       from 'next/link'
-import { useDispatch }            from 'react-redux'
-import { t_register }             from '@/redux/User/actions'
-import { omit }                   from 'lodash'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import React, {useState} from 'react'
+import {Button, Col, Form, Input, notification, Row, Space, Typography} from 'antd'
+import {useTranslation} from 'next-i18next'
+import Link from 'next/link'
+import {useDispatch} from 'react-redux'
+import {t_register} from '@/redux/User/actions'
+import {omit} from 'lodash'
+import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 
 
 const Register = () => {
-	const { t } = useTranslation()
+	const {t} = useTranslation()
 	const d = useDispatch()
-	
-	const onFinish = async ( vals ) => {
-		if ( vals.password !== vals.password_confirmation ) {
-			return notification.error({ message: 'Passwords not match' })
+	const [loading, setLoading] = useState(false)
+
+	const onFinish = async (vals) => {
+		if (vals.password !== vals.password_confirmation) {
+			return notification.error({message: 'Passwords not match'})
 		}
-		
-		const err = await d(t_register(omit(vals, [ 'password_confirmation' ])))
-		if ( err ) {
+		setLoading(true)
+		const err = await d(t_register(omit(vals, ['password_confirmation'])))
+		setLoading(false)
+		if (err) {
 			return notification.error({
 				message: err.message.match(/duplicate/)
 						 ? t('Email is not unique')
@@ -84,7 +77,7 @@ const Register = () => {
 						<Space>
 							<Button type="primary"
 									htmlType="submit">
-								{ t('Register') }
+								{loading ? t('Loading') : t('Register')}
 							</Button>
 							
 							<Link passHref

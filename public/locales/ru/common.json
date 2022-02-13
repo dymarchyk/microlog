@@ -32,5 +32,6 @@
   "{{name}} was updated.": "{{name}} был успешо обновлен.",
   "Project name": "Название проекта",
   "Collaborate": "Общий доступ",
-  "Update": "Обновить"
+  "Update": "Обновить",
+  "Loading": "Загрузка"
 }

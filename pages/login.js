@@ -1,29 +1,24 @@
-import React              from 'react'
-import {
-	Button,
-	Col,
-	Form,
-	Input,
-	notification,
-	Row,
-	Space,
-	Typography
-}                                 from 'antd'
-import { useTranslation }         from 'next-i18next'
-import { useDispatch }            from 'react-redux'
-import { t_login }                from '@/redux/User/actions'
-import Link                       from 'next/link'
-import nookies                    from 'nookies'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import React from 'react'
+import {Button, Col, Form, Input, notification, Row, Space, Typography,} from 'antd'
+import {useTranslation} from 'next-i18next'
+import {useDispatch} from 'react-redux'
+import {t_login} from '@/redux/User/actions'
+import Link from 'next/link'
+import nookies from 'nookies'
+import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 
 
 const Login = () => {
-	const { t } = useTranslation()
+	const {t} = useTranslation()
 	const d = useDispatch()
-	
-	const onFinish = async ( vals ) => {
+
+	const [loading, setLoading] = React.useState(false)
+
+	const onFinish = async (vals) => {
+		setLoading(true)
 		const err = await d(t_login(vals))
-		if ( err ) {
+		setLoading(false)
+		if (err) {
 			return notification.error({
 				message: err.message
 			})
@@ -67,7 +62,7 @@ const Login = () => {
 						<Space>
 							<Button type="primary"
 									htmlType="submit">
-								{ t('Login') }
+								{loading ? t('Loading') : t('Login')}
 							</Button>
 							<Link passHref
 								  href="/register">
