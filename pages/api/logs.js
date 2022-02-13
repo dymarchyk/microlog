@@ -29,7 +29,7 @@ async function getLogs( req, res ) {
 			{ $sort: { createdAt: -1 } },
 		])
 		// .sort({ createdAt: 1 })
-		res.json({ dates: d.map(x => ( { date: x._id, ...x } )) })
+		return res.json({dates: d.map(x => ({date: x._id, ...x}))})
 		// res.json({ dates: d })
 	}
 	const date = dayjs(req.query.date)
@@ -86,10 +86,10 @@ async function create( req, res ) {
 		})
 		const log = new Log(data)
 		await log.save()
-		res.status(200).json({message: 'saved', data: log}).end()
+		res.status(200).json({message: 'saved', data: log})
 	} catch ( e ) {
 		console.log('cannot save log', e)
-		res.status(200).json({message: 'saved'}).end()
+		res.status(200).json({message: 'saved'})
 	}
 }
 

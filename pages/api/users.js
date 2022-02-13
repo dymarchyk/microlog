@@ -1,21 +1,17 @@
-import nc       from 'next-connect'
-import {
-	database,
-	validation,
-	withSession
-}               from '@/middleware'
-import { User } from '@/entities'
+import nc from 'next-connect'
+import {database, validation,} from '@/middleware'
+import {User} from '@/entities'
 import * as Joi from 'joi'
-import bcrypt   from 'bcryptjs'
-import auth     from '@/middleware/auth'
-import nookies  from 'nookies'
+import bcrypt from 'bcryptjs'
+import auth from '@/middleware/auth'
+import nookies from 'nookies'
 
 const userSchema = Joi.object({
 	password: Joi.string()
 		.required()
 		.alphanum()
 		.min(6),
-	email   : Joi.string()
+	email: Joi.string()
 		.email()
 		.required()
 })
